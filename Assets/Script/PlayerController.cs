@@ -8,10 +8,10 @@ public class PlayerController : MonoBehaviour
     Rigidbody _rb;
     [SerializeField] bool _isGround;
     [SerializeField, Range(0.0f, 5.0f)] private float _accelerationRatio = 1.0f;
-    [SerializeField, Range(0.0f, 10.0f)] private float _speedMax = 5.0f;
+    [Range(0.0f, 20.0f)] private float _speedMax = 5.0f;
     Vector3 _velocity = Vector3.zero;
 
-    [SerializeField, Range(0.0f, 10.0f)] public float _jumpRatio = 5.0f;
+    [SerializeField, Range(0.0f, 20.0f)] private float _jumpRatio = 5.0f;
     [SerializeField] List<GameObject> _jumpList = new List<GameObject>();
     [SerializeField] List<GameObject> _onGroundList = new List<GameObject>();
 
