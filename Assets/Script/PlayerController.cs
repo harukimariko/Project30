@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using static UnityEditor.Searcher.SearcherWindow.Alignment;
+using SceneState;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : CharacterStatus
 {
     [SerializeField] Camera _camera; 
     Rigidbody _rb;
@@ -47,6 +48,8 @@ public class PlayerController : MonoBehaviour
             JumpForce(_jumpRatio);
             _isGround = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.U)) ApplyHp(-10);
     }
     private void FixedUpdate()
     {
@@ -120,5 +123,18 @@ public class PlayerController : MonoBehaviour
                 GameObject onGround = Instantiate(go, position, Quaternion.identity);
             }
         }
+    }
+
+    protected override bool ApplyHp(int apply)
+    {
+        bool death = base.ApplyHp(apply);
+
+        if (death)
+        {
+            // 死んだときの判定を書く
+            GameManager.INSTANCE.SetState(SceneState.State.Over);
+        }
+
+        return death;
     }
 }

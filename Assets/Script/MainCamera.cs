@@ -13,6 +13,8 @@ public class MainCamera : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (_targetTransform == null) return;
+
         Vector3 position = _offsetPosition + _targetTransform.position;
 
         transform.position = Vector3.Lerp(transform.position, position, _linearRatio);
