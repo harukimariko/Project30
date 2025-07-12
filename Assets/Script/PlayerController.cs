@@ -25,6 +25,8 @@ public class PlayerController : CharacterStatus
 
     private void Update()
     {
+        if (GameManager.INSTANCE._state == State.Pause) return;
+
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
@@ -46,7 +48,6 @@ public class PlayerController : CharacterStatus
         if (Input.GetButtonDown("Jump") && _isGround)
         {
             JumpForce(_jumpRatio);
-            _isGround = false;
         }
 
         if (Input.GetKeyDown(KeyCode.U)) ApplyHp(-10);
@@ -125,7 +126,15 @@ public class PlayerController : CharacterStatus
         }
     }
 
-    protected override bool ApplyHp(int apply)
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            _isGround = false;
+        }
+    }
+
+    public override bool ApplyHp(int apply)
     {
         bool death = base.ApplyHp(apply);
 
