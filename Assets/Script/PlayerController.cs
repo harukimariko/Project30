@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody _rb;
     [SerializeField] bool _isGround;
     [SerializeField, Range(0.0f, 5.0f)] private float _accelerationRatio = 1.0f;
-    [Range(0.0f, 20.0f)] private float _speedMax = 5.0f;
+    [Range(0.0f, 20.0f)] public float _speedMax = 5.0f;
+    [Range(0.0f, 20.0f)] public float _turnSpeed = 5.0f;
     Vector3 _velocity = Vector3.zero;
 
     [SerializeField, Range(0.0f, 20.0f)] private float _jumpRatio = 5.0f;
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        // ƒJƒƒ‰‚Ì³–Ê•ûŒü‚Æ‰E•ûŒü‚ğæ“¾iY²‚Í–³‹j
+        // ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Ê•ï¿½ï¿½ï¿½ï¿½Æ‰Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½iYï¿½ï¿½ï¿½Í–ï¿½ï¿½ï¿½ï¿½j
         Vector3 cameraForward = _camera.transform.forward;
         cameraForward.y = 0;
         cameraForward.Normalize();
@@ -35,9 +36,9 @@ public class PlayerController : MonoBehaviour
         cameraRight.y = 0;
         cameraRight.Normalize();
 
-        // ƒJƒƒ‰Šî€‚ÌˆÚ“®•ûŒü‚ğì¬
+        // ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½î€ï¿½ÌˆÚ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì¬
         Vector3 direction = cameraForward * vertical + cameraRight * horizontal;
-        direction.Normalize(); // Î‚ßˆÚ“®‚Å‚à‘¬“x‚ªˆê’è‚É‚È‚é‚æ‚¤‚É³‹K‰»
+        direction.Normalize(); // ï¿½Î‚ßˆÚ“ï¿½ï¿½Å‚ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½É‚È‚ï¿½æ‚¤ï¿½Éï¿½ï¿½Kï¿½ï¿½
 
         _velocity = direction * _accelerationRatio;
 
@@ -55,10 +56,10 @@ public class PlayerController : MonoBehaviour
             _velocity = Vector3.zero;
         }
 
-        // ‘¬“x‚Ì•Û‘¶
+        // ï¿½ï¿½ï¿½xï¿½Ì•Û‘ï¿½
         Vector3 velocity = new Vector3(_rb.linearVelocity.x, 0.0f, _rb.linearVelocity.z);
 
-        // Å‘å‘¬“x§ŒÀ
+        // ï¿½Å‘å‘¬ï¿½xï¿½ï¿½ï¿½ï¿½
         if (velocity.magnitude > _speedMax)
         {
             velocity = velocity.normalized * _speedMax;
@@ -66,6 +67,33 @@ public class PlayerController : MonoBehaviour
             _rb.linearVelocity = velocity + new Vector3(0.0f, _rb.linearVelocity.y, 0.0f);
         }
 
+        velocity = _rb.linearVelocity;
+
+        // åœæ­¢ä¸­ã¯å›è»¢ã—ãªã„
+        if (velocity.sqrMagnitude < 0.01f)
+            return;
+
+        // Yè»¸æ–¹å‘ã«é™å®šã—ãŸå›è»¢ç”¨æ–¹å‘ï¼ˆXZå¹³é¢ã«æŠ•å½±ï¼‰
+        Vector3 flatDirection = new Vector3(velocity.x, 0, velocity.z);
+        if (flatDirection.sqrMagnitude < 0.001f)
+            return;
+
+        // ç›®æ¨™ã®Yè»¸å›è»¢
+        Quaternion targetRotation = Quaternion.LookRotation(flatDirection, Vector3.up);
+
+        // ç¾åœ¨ã®å›è»¢
+        Quaternion currentRotation = _rb.rotation;
+
+        // Yè»¸ã ã‘è£œé–“ã™ã‚‹ã‚ˆã†ã«Eulerè§’ã‚’å–ã‚Šå‡ºã—ã¦è£œé–“
+        float targetY = targetRotation.eulerAngles.y;
+        float currentY = currentRotation.eulerAngles.y;
+        float smoothY = Mathf.LerpAngle(currentY, targetY, _turnSpeed * Time.fixedDeltaTime);
+
+        // æ–°ã—ã„å›è»¢ã‚’è¨­å®šï¼ˆYè»¸ã®ã¿å¤‰åŒ–ï¼‰
+        Quaternion smoothRotation = Quaternion.Euler(0, smoothY, 0);
+
+        // å›è»¢ã‚’é©ç”¨
+        _rb.MoveRotation(smoothRotation);
     }
 
     public void JumpForce(float force)
