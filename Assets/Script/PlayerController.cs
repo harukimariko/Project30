@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using static UnityEditor.Searcher.SearcherWindow.Alignment;
+using SceneState;
 
 public class PlayerController : CharacterStatus
 {
@@ -47,6 +48,8 @@ public class PlayerController : CharacterStatus
             JumpForce(_jumpRatio);
             _isGround = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.U)) ApplyHp(-10);
     }
     private void FixedUpdate()
     {
@@ -129,7 +132,7 @@ public class PlayerController : CharacterStatus
         if (death)
         {
             // 死んだときの判定を書く
-            // GameManager.INSTANCE.
+            GameManager.INSTANCE.SetState(SceneState.State.Over);
         }
 
         return death;
