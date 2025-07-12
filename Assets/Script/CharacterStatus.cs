@@ -19,8 +19,10 @@ public class CharacterStatus : MonoBehaviour
     }
 
     public void SetHp(int hp){_hp = hp; }
-    public void ApplyHp(int apply)
+    protected virtual bool ApplyHp(int apply)
     {
+        bool death = false;
+
         _hp += apply;
 
         if (_hp <= 0)
@@ -32,7 +34,11 @@ public class CharacterStatus : MonoBehaviour
 
                 GameObject spawnObject = Instantiate(obj, pos, rot);
             }
+
+            death = true;
         }
+
+        return death;
     }
     public void SetName(string name) { _name = name; }
 
