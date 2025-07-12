@@ -15,16 +15,15 @@ public class SceneChanger : MonoBehaviour
 
     public void SetOffsetTime(float time) { _offsetTime = time; }
     public void SetOffsetTimeScale(float time) { Time.timeScale = time; }
-    public void SetSceneState(State state) { GameManager.INSTANCE.SetState(state); }
 
     public void ChangeSceneCoroutine(string scene)
     {
-        SetSceneState(State.Pause);
         StartCoroutine(ChangeScene(scene));
     }
 
     private IEnumerator ChangeScene(string scene)
     {
+        Debug.Log("ƒV[ƒ“‚ª•Ï‚í‚é‚æ");
         yield return new WaitForSeconds(_offsetTime);
         SceneManager.LoadScene(scene);
     }

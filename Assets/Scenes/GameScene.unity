@@ -495,7 +495,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 911942690}
-  _state: 0
   _timeScalePause: 0
   _timeScaleGame: 1
   _timeScaleSlow: 0.2
@@ -933,7 +932,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 911942690}
-  _state: 0
   _timeScalePause: 0
   _timeScaleGame: 1
   _timeScaleSlow: 0.2
@@ -1303,7 +1301,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offsetTime: 1
-  _offsetTimeScale: 1
 --- !u!1 &1024852137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1422,7 +1419,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offsetTime: 0
-  _offsetTimeScale: 1
 --- !u!1001 &1134248137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1834,7 +1830,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offsetTime: 1
-  _offsetTimeScale: 1
 --- !u!1 &1217259791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1951,7 +1946,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0.5
+          m_FloatArgument: 1
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -2006,7 +2001,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offsetTime: 1
-  _offsetTimeScale: 1
 --- !u!1 &1592450498
 GameObject:
   m_ObjectHideFlags: 0
