@@ -8,7 +8,7 @@ public class CharacterStatus : MonoBehaviour
 {
     public string _name { get; private set; } = "none";
     [Range(1, 100)] public int _hpMax = 0;
-    public int _hp { get; private set; } = 1;
+    public int _hp = 1;
     [SerializeField] private List<GameObject> _destroySpawnObjectList;
     bool _isDeath = false;
     [SerializeField, Range(0.0f, 5.0f)] float _isDeathAliveTime = 1.0f;

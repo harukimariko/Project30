@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using SceneState;
 
 public class SceneChanger : MonoBehaviour
 {
@@ -12,13 +13,13 @@ public class SceneChanger : MonoBehaviour
 
     }
 
-    public void SetOffsetTime(float time)
-    {
-        _offsetTime = time;
-    }
+    public void SetOffsetTime(float time) { _offsetTime = time; }
+    public void SetOffsetTimeScale(float time) { Time.timeScale = time; }
+    public void SetSceneState(State state) { GameManager.INSTANCE.SetState(state); }
 
     public void ChangeSceneCoroutine(string scene)
     {
+        SetSceneState(State.Pause);
         StartCoroutine(ChangeScene(scene));
     }
 

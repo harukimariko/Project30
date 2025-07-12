@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class HPGiver : MonoBehaviour
 {
-    public Owner _owner { get; private set; } = Owner.Enemy;
+    public Owner _owner = Owner.Enemy;
     [Range(-999, 999)] public int _applyValue = 1;
+    [SerializeField, Range(0.0f, 10.0f)] private float _aliveTime = 0.0f;
 
-    private void OnCollisionEnter(Collision collision)
+    private void Start()
     {
-        if (_owner == Owner.Enemy && collision.gameObject.CompareTag("Enemy")) return;
-        if (_owner == Owner.Player && collision.gameObject.CompareTag("Player")) return;
+        Destroy(gameObject, _aliveTime);
+    }
 
-        CharacterStatus cs = collision.gameObject.GetComponent<CharacterStatus>();
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_owner == Owner.Enemy && other.gameObject.CompareTag("Enemy")) return;
+        if (_owner == Owner.Player && other.gameObject.CompareTag("Player")) return;
+
+        CharacterStatus cs = other.gameObject.GetComponent<CharacterStatus>();
         if (cs != null)
         {
             cs.ApplyHp(_applyValue);
