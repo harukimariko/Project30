@@ -125,7 +125,7 @@ public class PlayerController : CharacterStatus
         }
     }
 
-    protected override bool ApplyHp(int apply)
+    public override bool ApplyHp(int apply)
     {
         bool death = base.ApplyHp(apply);
 

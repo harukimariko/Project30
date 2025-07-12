@@ -26,7 +26,7 @@ public class CharacterStatus : MonoBehaviour
     public void SetName(string name) { _name = name; }
 
     public void SetHp(int hp){_hp = hp; }
-    protected virtual bool ApplyHp(int apply)
+    public virtual bool ApplyHp(int apply)
     {
         bool death = false;
 
