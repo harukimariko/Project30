@@ -15,7 +15,7 @@ public class SpawnerScript : MonoBehaviour
         StartCoroutine(SetCollier(true));
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         SpawnObject();
         Destroy(gameObject);

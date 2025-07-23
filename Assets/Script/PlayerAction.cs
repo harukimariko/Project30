@@ -6,7 +6,9 @@ public class PlayerAction : MonoBehaviour
 {
     public List<GameObject> _actionList = new List<GameObject>();
     [SerializeField, Range(0.0f, 20.0f)] private float _launchSpeed;
-    [SerializeField] Vector3 _direction = Vector3.forward;
+    [SerializeField] private Vector3 _direction = Vector3.forward;
+    [SerializeField] private FuelTank _tank;
+    [SerializeField] private float _fuelCost = -10.0f;
 
     private void Update()
     {
@@ -14,7 +16,11 @@ public class PlayerAction : MonoBehaviour
 
         _direction = transform.forward;
 
-        if (Input.GetButtonDown("Fire1")) Action();
+        if (Input.GetButtonDown("Fire1") && _tank.CheckCost(Mathf.Abs(_fuelCost)))
+        {
+            Action();
+            _tank.AddFuel(_fuelCost);
+        }
     }
 
     public void Action()

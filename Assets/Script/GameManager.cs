@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour
     static public GameManager INSTANCE;
 
     [SerializeField] GameObject _player;
-    public State _state { get; private set; } = State.Game;
+    public State _state { get; private set; } = State.Game
+        ;
     // ŽžŠÔ
     [SerializeField] float _timeScalePause = 0.0f;
     [SerializeField] float _timeScaleGame = 1.0f;
